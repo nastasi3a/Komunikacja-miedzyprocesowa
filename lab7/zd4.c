@@ -28,9 +28,8 @@ int main(int argc, char** argv) {
     
     for (int i = 0; i < powtorzen; i++) {
         printf("%s (PID=%d, PPID=%d)\n", komunikat, getpid(), getppid());
-        sleep(1);
+        sleep(2);
     }
-    
     printf("Koniec działania procesu (PID=%d)\n", getpid());
     
     if (pid_potomka > 0) {
@@ -41,10 +40,14 @@ int main(int argc, char** argv) {
             system("ps | grep program");
         } else {
             printf("Proces potomny (PID=%d) zakończył działanie z kodem %d.\n", pid_potomka, WEXITSTATUS(status));
-        }
+ }
     } else {
         printf("Proces rodzica (PID=%d) zakończył działanie.\n", getppid());
-        system("ps | grep program");
+        int ppid = getppid();
+        char command[100];
+        sprintf(command, "ps | grep %d", ppid);
+        system(command);
+        printf("Proces %d: zostalem osierocony przez rodzica %d.\n", getpid(), ppid);
     }
     
     return 0;
