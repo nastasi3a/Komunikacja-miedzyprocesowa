@@ -2,40 +2,43 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <signal.h>
+#include <sys/wait.h>
 
 int main(int argc, char** argv) {
     pid_t pid_potomka;
-    char* kommunikat;
+    char* komunikat;
     int powtorzen;
+
     printf("Na razie działa jeden proces\n");
     pid_potomka = fork();
     switch (pid_potomka) {
         case -1:
-            printf("rozwidlenie procesu nie powiodło się\n");
+            printf("Rozwidlenie procesu nie powiodło się\n");
             exit(1);
         case 0:
-            kommunikat = "Jestem potomkiem";
+            komunikat = "Jestem potomkiem";
             powtorzen = 5;
-            sleep(10); // dodanie funkcji sleep()
-            printf("Proces potomny: %d zakończył działanie\n", getpid());
             break;
         default:
-            kommunikat = "Jestem rodzicem";
-            powtorzen = 5;
-            sleep(1);
-            printf("Proces rodzica: %d utworzył proces potomny o PID: %d\n", getpid(), pid_potomka);
-            printf("Wysyłam sygnał SIGKILL do procesu potomnego: %d\n", pid_potomka);
-            char command[50];
-            sprintf(command, "kill -9 %d", pid_potomka); // wysyłanie sygnału SIGKILL do procesu potomnego
-            system(command);
-            sleep(5); // oczekiwanie na stworzenie procesu zombie
-            printf("Proces rodzica: %d zakończył działanie\n", getpid());
+            komunikat = "Jestem rodzicem";
+            powtorzen = 10;
+            sleep(1); // czekaj na proces potomny
             break;
     }
-    for (; powtorzen > 0; powtorzen--) {
-        puts(kommunikat);
-        sleep(1);
+
+    for (int i = 0; i < powtorzen; i++) {
+        printf("%s (PID=%d, PPID=%d)\n", komunikat, getpid(), getppid());
+        sleep(2);
     }
+    printf("Koniec działania procesu (PID=%d)\n", getpid());
+
+    if (pid_potomka > 0) {
+        sleep(10); // niepoprawne wywołanie funkcji waitpid()
+        printf("Proces rodzica (PID=%d) zakończył działanie.\n", getppid());
+        system("ps | grep program");
+    } else {
+        printf("Proces potomny (PID=%d) zakończył działanie z kodem 0.\n", getpid());
+    }
+
     return 0;
 }
