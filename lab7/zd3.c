@@ -8,7 +8,7 @@ int main(int argc, char** argv) {
     char* komunikat;
     int powtorzen;
     printf("Na razie działa jeden proces (PID=%d)\n", getpid());
-    pid_potomka = fork();
+    pid_potomka = fork(); //stworzenie procesu potomnego
     switch (pid_potomka) {
         case -1:
             printf("Rozwidlenie procesu nie powiodło się\n");

@@ -8,12 +8,12 @@ int main(int argc,char**argv){
 	char* kommunikat;
 	int powtorzen;
 	printf("Na razie działa jeden proces\n");
-	pid_potomka=fork();
+	pid_potomka=fork(); //tworzenie nowego procesu na zasadzie relacji rodzic - dziecko
 	switch (pid_potomka){
-		case-1:
+		case-1: //utworzenie procesu potomnego się nie powiodło
 			printf("rozwidlenie procesu nie powiodło się\n");
-			exit(1);
-		case 0:
+			exit(1); //powrót do jądra systemu, z kodem zakończenia 1
+		case 0: //kod jest wykonywany w procesie potomnym
 			kommunikat="Jestem potomkiem";
 			powtorzen = 5;
 			break;
@@ -23,7 +23,7 @@ int main(int argc,char**argv){
 			break;
 	}
 	for(;powtorzen>0;powtorzen--){
-	puts(kommunikat);
+	puts(kommunikat); //wyświetlenie wartości zmiennej kommunikat na standardowym wyjściu
 	sleep(1);
 	}
 }

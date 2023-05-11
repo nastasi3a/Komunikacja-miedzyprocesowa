@@ -37,16 +37,16 @@ int main(int argc, char** argv) {
         pid_t result = waitpid(pid_potomka, &status, WNOHANG);
         if (result == 0) {
             printf("Proces potomny (PID=%d) jest jeszcze uruchomiony.\n", pid_potomka);
-            system("ps | grep program");
+            system("ps | grep zd4");
         } else {
             printf("Proces potomny (PID=%d) zakończył działanie z kodem %d.\n", pid_potomka, WEXITSTATUS(status));
  }
     } else {
         printf("Proces rodzica (PID=%d) zakończył działanie.\n", getppid());
         int ppid = getppid();
-        char command[100];
-        sprintf(command, "ps | grep %d", ppid);
-        system(command);
+        char command[100]; //napis do przechowywania polecenia powłoki
+        sprintf(command, "ps | grep %d", ppid); //zapisanie napisu w podanej jako argument tablice znaków w postaci "ps | grep {ppid}"
+        system(command); //wykonanie polecenia
         printf("Proces %d: zostalem osierocony przez rodzica %d.\n", getpid(), ppid);
     }
     
