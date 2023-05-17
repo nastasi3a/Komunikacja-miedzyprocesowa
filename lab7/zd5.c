@@ -22,20 +22,18 @@ int main(int argc, char** argv) {
         default:
             komunikat = "Jestem rodzicem";
             powtorzen = 10;
-            sleep(1); // czekaj na proces potomny
             break;
     }
 
     for (int i = 0; i < powtorzen; i++) {
         printf("%s (PID=%d, PPID=%d)\n", komunikat, getpid(), getppid());
-        sleep(2);
+	system("ps aux | grep zd5 | grep -v grep");
+        sleep(1);
     }
     printf("Koniec działania procesu (PID=%d)\n", getpid());
 
     if (pid_potomka > 0) {
-        sleep(10); // niepoprawne wywołanie funkcji waitpid()
-        printf("Proces rodzica (PID=%d) zakończył działanie.\n", getppid());
-        system("ps | grep program");
+        printf("Proces rodzica (PID=%d) zakończył działanie.\n", getpid());
     } else {
         printf("Proces potomny (PID=%d) zakończył działanie z kodem 0.\n", getpid());
     }

@@ -28,6 +28,7 @@ int main(int argc, char** argv) {
     }
     for (; powtorzen > 0; powtorzen--) {
         puts(komunikat);
+	system("ps aux | grep zd6 | grep -v grep");
         sleep(1);
     }
     printf("Koniec procesu %d\n", getpid());

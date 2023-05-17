@@ -1,10 +1,10 @@
 #include <sys/types.h>
+#include <sys/wait.h>
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <sys/wait.h>
 
-int main(int argc, char** argv){
+int main(int argc, char** argv) {
     pid_t pid_potomka;
     char* komunikat;
     int powtorzen;
@@ -20,17 +20,20 @@ int main(int argc, char** argv){
             break;
         default:
             komunikat = "Jestem rodzicem";
-            powtorzen = 10;
+            powtorzen = 5;
+            printf("Czekam na zakończenie procesu potomnego...\n");
             while (waitpid(pid_potomka, NULL, WNOHANG) == 0) {
                 printf("Oczekiwanie na zakończenie procesu potomnego...\n");
                 sleep(1);
             }
-            printf("Proces potomny o PID=%d zakończył działanie.\n", pid_potomka);
+            printf("Proces potomny zakończył działanie\n");
             break;
     }
     for (; powtorzen > 0; powtorzen--) {
         puts(komunikat);
+	system("ps aux | grep zd7_1 | grep -v grep");
         sleep(1);
     }
+    printf("Koniec procesu %d\n", getpid());
     return 0;
 }
