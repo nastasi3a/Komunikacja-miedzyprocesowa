@@ -31,7 +31,7 @@ int main(int argc, char** argv) {
     }
     for (; powtorzen > 0; powtorzen--) {
         puts(komunikat);
-	system("ps aux | grep zd7_1 | grep -v grep");
+	system("ps aux | grep zd7 | grep -v grep");
         sleep(1);
     }
     printf("Koniec procesu %d\n", getpid());
