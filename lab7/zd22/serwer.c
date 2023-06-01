@@ -21,7 +21,7 @@ int main(int argc, char** argv) {
         snprintf(buffer, BUF_SIZE, "Serwer: wysyłam linie nr %d\n", i);
         write(fd, buffer, BUF_SIZE);
     }
-
+    unlink(FIFO_FILE);
     close(fd);
     return EXIT_SUCCESS;
 }

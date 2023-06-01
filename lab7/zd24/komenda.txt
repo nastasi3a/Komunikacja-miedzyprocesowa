@@ -1,0 +1,1 @@
+./msg_writer & sleep 1; ipcs -q; ./msg_reader
