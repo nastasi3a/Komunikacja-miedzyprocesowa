@@ -24,7 +24,7 @@ int main(int argc,char**argv){
 	}
 	for(;powtorzen>0;powtorzen--){
 	puts(kommunikat); //wyświetlenie wartości zmiennej kommunikat na standardowym wyjściu
-	system("ps aux | grep zd2 | grep -v grep");
+	system("ps aux | grep procesRodzicIProcesPotomny | grep -v grep");
 	sleep(1);
 	}
 }
